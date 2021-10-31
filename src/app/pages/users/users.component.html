@@ -1,4 +1,31 @@
+<h1>Users ({{total$ | async}})</h1>
 
 
+<div class="row">
 
-<h1>Users</h1>
+  <div [ngClass]="(selectedUser$ | async) ? 'col-8' : 'col-12'">
+    <table class="table table-bordered" *ngIf="users$ | async as users">
+
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Email</th>
+      </tr>
+
+      <tr *ngFor="let user of users" [ngClass]="(selectedUser$ | async) == user ? 'text-success' : ''">
+        <td>{{user.id}}</td>
+        <td (click)="selectUser(user)" class="clickable">{{user.name}}</td>
+        <td>{{user.email}}</td>
+      </tr>
+
+    </table>
+
+  </div>
+
+  <div class="col-4" *ngIf="(selectedUser$ | async)">
+    {{selectedUser$ | async | json}}
+
+    <button class="btn btn-sam btn-danger" (click)="deselectUser()">Close</button>
+  </div>
+</div>
+
