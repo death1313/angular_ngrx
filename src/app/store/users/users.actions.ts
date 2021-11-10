@@ -1,5 +1,6 @@
 import {Action} from "@ngrx/store";
 import {UserModel} from "../../pages/users/user.model";
+import {HttpErrorResponse} from "@angular/common/http";
 
 
 export enum UsersActionType {
@@ -25,7 +26,23 @@ export class SelectUser implements Action {
   }
 }
 
+export class LoadUsersDone implements Action {
+  readonly type = UsersActionType.LoadUsersDone;
+
+  constructor(public payload: UserModel[]) {
+  }
+}
+
+export class LoadUsersFailed implements Action {
+  readonly type = UsersActionType.LoadUsersFailed;
+
+  constructor(public payload: HttpErrorResponse) {
+  }
+}
+
 
 export type  UsersActions =
   | LoadUsers
   | SelectUser
+  | LoadUsersDone
+  | LoadUsersFailed
