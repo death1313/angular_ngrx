@@ -1,10 +1,11 @@
 import {NgModule} from "@angular/core";
 import {UserService} from "./user.service";
 import {UsersComponent} from "./users.component";
-import {EffectsModule} from "@ngrx/effects";
-import {UsersEffects} from "../../store/users/users.effects";
 import {RouterModule, Routes} from "@angular/router";
 import {CommonModule} from "@angular/common";
+import {EffectsModule} from "@ngrx/effects";
+import {UsersEffects} from "../../store/users/users.effects";
+
 
 
 const routes: Routes = [
@@ -14,10 +15,10 @@ const routes: Routes = [
 @NgModule({
   imports: [
     CommonModule,
+    RouterModule.forChild(routes),
     EffectsModule.forFeature([
-      UsersEffects,
-    ]),
-    RouterModule.forChild(routes)
+      UsersEffects
+    ])
   ],
   declarations: [
     UsersComponent
