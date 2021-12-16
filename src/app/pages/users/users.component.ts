@@ -1,7 +1,7 @@
 import {Component} from "@angular/core";
 import {select, Store} from "@ngrx/store";
 import {AppState} from "../../store";
-import {LoadUsers, SelectUser} from "../../store/users/users.actions";
+import {DeleteUser, LoadUsers, SelectUser} from "../../store/users/users.actions";
 import {selectSelectedUser, selectUsers, selectUsersTotal} from "../../store/users/users.reducer";
 import {Observable} from "rxjs";
 import {UserModel} from "./user.model";
@@ -31,5 +31,13 @@ export class UsersComponent {
 
   deselectUser() {
     this._store.dispatch(new SelectUser(null));
+  }
+
+  delete(id: number) {
+    this._store.dispatch(new DeleteUser(id));
+  }
+
+  editUser(user: UserModel) {
+    this.selectUser(user);
   }
 }

@@ -1,15 +1,18 @@
 import {Injectable} from "@angular/core";
-import {HttpClient} from "@angular/common/http";
+import {HttpService} from "../../services/http-service";
 
 
 @Injectable()
 export class UserService {
 
-  constructor(private _http: HttpClient) {
+  constructor(private _http: HttpService) {
   }
 
-
   load() {
-    return this._http.get('http://localhost:8080/api/v1/users');
+    return this._http.get('users');
+  }
+
+  delete(id: number) {
+    return this._http.delete(`users/${id}`);
   }
 }

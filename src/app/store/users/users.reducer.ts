@@ -8,15 +8,20 @@ export interface UsersState {
   users: UserModel[];
   selectedUser: UserModel | null;
   total: number | null;
+  recently: {
+    updated: number | null,
+    deleted: number | null
+  }
 }
 
 const initUsersState: UsersState = {
-  users: [
-    {id: 1, name: 'John Doe', email: 'john@doe.com'},
-    {id: 2, name: 'Jane Doe', email: 'jj@doe.com'},
-  ],
+  users: [],
   selectedUser: null,
-  total: 1
+  total: null,
+  recently: {
+    updated: null,
+    deleted: null
+  }
 }
 
 export function usersReducer(state: UsersState = initUsersState, action: UsersActions): UsersState {
@@ -31,6 +36,34 @@ export function usersReducer(state: UsersState = initUsersState, action: UsersAc
         ...state,
         selectedUser: action.payload
       }
+
+    case UsersActionType.LoadUsersDone:
+      return {
+        ...state,
+        users: action.payload,// response API
+        total: action.payload?.length
+      }
+
+    // delete
+    case UsersActionType.DeleteUser:
+      return state;
+
+    case UsersActionType.DeleteUserDone:
+      const index: number = state.users.findIndex(user => user.id == action.payload);
+      return {
+        ...state,
+        users: [
+          ...state.users.slice(0, index),
+          ...state.users.slice(index + 1)
+        ],
+        total: state.total - 1,
+        recently: {
+          ...state.recently,
+          deleted: action.payload
+        }
+      }
+
+    // update
 
     default:
       return state;
