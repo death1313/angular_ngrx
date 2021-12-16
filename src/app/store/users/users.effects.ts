@@ -1,7 +1,15 @@
 import {Injectable} from "@angular/core";
 import {UserService} from "../../pages/users/user.service";
 import {Actions, createEffect, ofType} from "@ngrx/effects";
-import {DeleteUser, DeleteUserDone, LoadUsers, LoadUsersDone, UsersActionType} from "./users.actions";
+import {
+  DeleteUser,
+  DeleteUserDone,
+  LoadUsers,
+  LoadUsersDone,
+  UpdateUser,
+  UpdateUserDone,
+  UsersActionType
+} from "./users.actions";
 import {map, switchMap} from "rxjs/operators";
 import {UserModel} from "../../pages/users/user.model";
 
@@ -31,6 +39,19 @@ export class UsersEffects {
         .pipe(
           map((r) => {
             return new DeleteUserDone(action.payload);
+          })
+        )
+      )
+    )
+  )
+
+  onUpdate$ = createEffect(() => this.actions$
+    .pipe(
+      ofType(UsersActionType.UpdateUser),
+      switchMap((action: UpdateUser) => this._service.update(action.payload)
+        .pipe(
+          map((res : UserModel ) => {
+            return new UpdateUserDone(res);
           })
         )
       )

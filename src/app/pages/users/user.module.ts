@@ -5,6 +5,7 @@ import {RouterModule, Routes} from "@angular/router";
 import {CommonModule} from "@angular/common";
 import {EffectsModule} from "@ngrx/effects";
 import {UsersEffects} from "../../store/users/users.effects";
+import {ReactiveFormsModule} from "@angular/forms";
 
 
 
@@ -18,7 +19,8 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     EffectsModule.forFeature([
       UsersEffects
-    ])
+    ]),
+    ReactiveFormsModule
   ],
   declarations: [
     UsersComponent

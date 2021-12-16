@@ -64,6 +64,19 @@ export function usersReducer(state: UsersState = initUsersState, action: UsersAc
       }
 
     // update
+    case UsersActionType.UpdateUser:
+      return state;
+
+    case UsersActionType.UpdateUserDone:
+      const updatedIndex: number = state.users.findIndex(u => u.id == action.payload.id);
+      return {
+        ...state,
+        users: [
+          ...state.users.slice(0, updatedIndex),
+          action.payload, // backend response , updated user
+          ...state.users.slice(updatedIndex + 1)
+        ],
+      }
 
     default:
       return state;
